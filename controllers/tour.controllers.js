@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { createTourService, getAllTourServices, getTourServicebyId } = require('../services/tour.services')
+const { createTourService, getAllTourServices, getTourServicebyId, updateToureService } = require('../services/tour.services')
 
 exports.getAllTour = async (req, res, next) => {
     try {
@@ -11,7 +11,6 @@ exports.getAllTour = async (req, res, next) => {
         filterString = filterString.replace(/\b(gt|gte|lt|Lte)\b/g, match => `$${match}`)
 
         filters = JSON.parse(filterString)
-        console.log(JSON.parse(filterString))
 
 
         const queries = {}
@@ -88,3 +87,23 @@ exports.getTourById = async (req, res, next) => {
           })
     }
 }
+
+exports.updateTour=async(req,res,next)=>{
+    try {
+      const {id}=req.params;
+      const result=await updateToureService(id,req.body)
+      res.status(200).json({
+        stauts: "success",
+        massage: "Data Update successfully",
+        data: result
+      })
+      
+    } catch (error) {
+      res.status(400).json({
+        stauts:"fail",
+        message: "Product is not update",
+        error : error.message
+      })
+    }
+
+  }
