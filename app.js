@@ -6,8 +6,9 @@ const mongoose = require("mongoose");
 //middleware
 app.use(express.json());
 app.use(cors());
+
 //routes
-/* const productRoute=require('./routes/product.route') */
+const tourRoute=require('./routes/tour.route')
 
 
 app.get("/", (req, res) => {
@@ -15,7 +16,7 @@ app.get("/", (req, res) => {
 });
 
 // route colling
-/* app.use("/api/v1/product",productRoute) */
+app.use("/api/v1",tourRoute)
 
 
 module.exports = app;
