@@ -1,6 +1,6 @@
 const Tours=require('../models/tourManagement.modle')
-
-
+const viewCount = require('../middleware/viewCount');
+const mongoose = require('mongoose');
 exports.getAllTourServices=async(filters,queries)=>{
 
     const tour = await Tours.find(filters)
@@ -18,13 +18,17 @@ exports.createTourService = async (data) => {
     return product;
 }
 
-exports.getTourServicebyId=async(id)=>{
+exports.getTourServicebyId= async(id)=>{
     const tour = await Tours.findOne(id);
     return tour;
 }
 
 exports.updateToureService = async (tourId, data) => {
     const result = await Tours.updateOne({ _id: tourId }, { $set: data }, { runValidators: true })
+    return result;
+}
+exports.trendingTourService = async () => {
+    const result = await Tours.find({})
     return result;
 }
 exports.cheapestTourService = async () => {

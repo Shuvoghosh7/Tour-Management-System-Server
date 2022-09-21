@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const { createTourService, getAllTourServices, getTourServicebyId, updateToureService, cheapestTourService } = require('../services/tour.services')
+const viewCount = require('../middleware/viewCount');
+const { createTourService, getAllTourServices, getTourServicebyId, updateToureService, cheapestTourService, trendingTourService } = require('../services/tour.services')
 
 exports.getAllTour = async (req, res, next) => {
     try {
@@ -61,7 +62,7 @@ exports.createToure = async (req, res, next) => {
     }
 }
 
-exports.getTourById = async (req, res, next) => {
+exports.getTourById =async (req, res, next) => {
     try {
         const { id } = req.params;
         if (!mongoose.Types.ObjectId(id)) {
@@ -122,3 +123,20 @@ exports.cheapestTour = async (req, res, next) => {
         })
     }
 }
+exports.trendingTour = async (req, res, next) => {
+    try {
+        const result = await trendingTourService();
+        res.status(200).json({
+            stauts: "success",
+            massage: "Getting A cheapest Tour Successfully",
+            data: result
+        })
+    } catch (error) {
+        res.status(400).json({
+            stauts: "fail",
+            message: "cheapestTour Data is not find",
+            error: error.message
+        })
+    }
+}
+
